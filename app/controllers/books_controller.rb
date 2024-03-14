@@ -7,7 +7,7 @@ class BooksController < ApplicationController
     @books = Book.all
     if @book.save
       flash[:notice] = "successfully"
-      redirect_to show_book_path(@book.id)
+      redirect_to book_path(@book.id)
     else
      render :index
     end
@@ -30,7 +30,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     if @book.update(book_params)
       flash[:notice] = "successfully"
-      redirect_to show_book_path(@book.id)
+      redirect_to book_path(@book.id)
     else
       render :edit
     end
@@ -39,7 +39,8 @@ class BooksController < ApplicationController
   def destroy
     book = Book.find(params[:id])
     book.destroy
-    redirect_to '/books'
+    flash[:notice] = "successfully"
+    redirect_to books_path
   end
   
   private
@@ -47,5 +48,4 @@ class BooksController < ApplicationController
   def book_params
       params.require(:book).permit(:title, :body)
   end
-  
 end
